@@ -1,0 +1,21 @@
+.card {
+    height: 300px; /* Set a fixed height for the cards */
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribute space evenly */
+}
+
+@media(min-width: 768px){
+    .news-input{
+        width: 50%
+    }
+    }
+
+    body::before {
+        display:block;
+        content: "";
+        height: 60px;
+    }
