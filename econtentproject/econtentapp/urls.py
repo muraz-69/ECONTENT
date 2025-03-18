@@ -2,16 +2,56 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('home', views.Home, name='home'),
+    # Home Page (Main Landing Page)
+    path('', views.Home, name='home'),
+
+    # Authentication
     path('register/', views.RegisterView, name='register'),
     path('login/', views.LoginView, name='login'), 
     path('logout/', views.LogoutView, name='logout'),
     path('forgot-password/', views.ForgotPassword, name='forgot-password'),
     path('password-reset-sent/<str:reset_id>/', views.PasswordResetSent, name='password-reset-sent'),
     path('reset-password/<str:reset_id>/', views.ResetPassword, name='reset-password'),
-    path('', views.bible_and_man_list, name='bible_and_man_list'),
-    path('<int:pk>/', views.bible_and_man_detail, name='bible_and_man_detail'),
-    path('create/', views.bible_and_man_create, name='bible_and_man_create'),
-    path('<int:pk>/edit/', views.bible_and_man_update, name='bible_and_man_update'),
-    path('<int:pk>/delete/', views.bible_and_man_delete, name='bible_and_man_delete'),
+
+    # Bible & Man CRUD
+    path('bible_and_man/', views.bible_and_man_list, name='bible_and_man_list'),
+    path('bible_and_man/<int:pk>/', views.bible_and_man_detail, name='bible_and_man_detail'),
+    path('bible_and_man/create/', views.bible_and_man_create, name='bible_and_man_create'),
+    path('bible_and_man/<int:pk>/edit/', views.bible_and_man_update, name='bible_and_man_update'),
+    path('bible_and_man/<int:pk>/delete/', views.bible_and_man_delete, name='bible_and_man_delete'),
+
+    # Climate Change Awareness CRUD
+    path('climate_change/', views.climate_change_list, name='climate_change_list'),
+    path('climate_change/<int:pk>/', views.climate_change_detail, name='climate_change_detail'),
+    path('climate_change/create/', views.climate_change_create, name='climate_change_create'),
+    path('climate_change/<int:pk>/edit/', views.climate_change_update, name='climate_change_update'),
+    path('climate_change/<int:pk>/delete/', views.climate_change_delete, name='climate_change_delete'),
+
+    # Health & Wellness Resources CRUD
+    path('health_wellness/', views.health_wellness_list, name='health_wellness_list'),
+    path('health_wellness/<int:pk>/', views.health_wellness_detail, name='health_wellness_detail'),
+    path('health_wellness/create/', views.health_wellness_create, name='health_wellness_create'),
+    path('health_wellness/<int:pk>/edit/', views.health_wellness_update, name='health_wellness_update'),
+    path('health_wellness/<int:pk>/delete/', views.health_wellness_delete, name='health_wellness_delete'),
+
+    # Trendy Fashion & Apparel CRUD
+    path('trendy_fashion/', views.trendy_fashion_list, name='trendy_fashion_list'),
+    path('trendy_fashion/<int:pk>/', views.trendy_fashion_detail, name='trendy_fashion_detail'),
+    path('trendy_fashion/create/', views.trendy_fashion_create, name='trendy_fashion_create'),
+    path('trendy_fashion/<int:pk>/edit/', views.trendy_fashion_update, name='trendy_fashion_update'),
+    path('trendy_fashion/<int:pk>/delete/', views.trendy_fashion_delete, name='trendy_fashion_delete'),
+
+    # E-Books CRUD
+    path('ebooks/', views.ebooks_list, name='ebooks_list'),
+    path('ebooks/<int:pk>/', views.ebooks_detail, name='ebooks_detail'),
+    path('ebooks/create/', views.ebooks_create, name='ebooks_create'),
+    path('ebooks/<int:pk>/edit/', views.ebooks_update, name='ebooks_update'),
+    path('ebooks/<int:pk>/delete/', views.ebooks_delete, name='ebooks_delete'),
+
+    # Online Courses CRUD
+    path('online_courses/', views.online_courses_list, name='online_courses_list'),
+    path('online_courses/<int:pk>/', views.online_courses_detail, name='online_courses_detail'),
+    path('online_courses/create/', views.online_courses_create, name='online_courses_create'),
+    path('online_courses/<int:pk>/edit/', views.online_courses_update, name='online_courses_update'),
+    path('online_courses/<int:pk>/delete/', views.online_courses_delete, name='online_courses_delete'),
 ]

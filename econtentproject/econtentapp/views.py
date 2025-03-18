@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.urls import reverse
 from .models import * 
 from .forms import BibleAndManResourceForm
+from .forms import ClimateChangeResourceForm
 
 
 # Create your views here.
@@ -229,3 +230,56 @@ def bible_and_man_delete(request, pk):
         resource.delete()
         return redirect('bible_and_man_list')
     return render(request, 'bible_and_man/confirm_delete.html', {'resource': resource})
+
+# Check if user is admin
+def is_admin(user):
+    return user.is_superuser
+
+# List all resources
+def climate_change_list(request):
+    resources = ClimateChangeResource.objects.all()
+    return render(request, 'climate_change/list.html', {'resources': resources})
+
+# View details of a single resource
+def climate_change_detail(request, pk):
+    resource = get_object_or_404(ClimateChangeResource, pk=pk)
+    return render(request, 'climate_change/detail.html', {'resource': resource})
+
+# Admin - Add new resource
+@login_required
+@user_passes_test(is_admin)
+def climate_change_create(request):
+    if request.method == 'POST':
+        form = ClimateChangeResourceForm(request.POST, request.FILES)
+        if form.is_valid():
+            resource = form.save(commit=False)
+            resource.uploaded_by = request.user
+            resource.save()
+            return redirect('climate_change_list')
+    else:
+        form = ClimateChangeResourceForm()
+    return render(request, 'climate_change/form.html', {'form': form})
+
+# Admin - Edit resource
+@login_required
+@user_passes_test(is_admin)
+def climate_change_update(request, pk):
+    resource = get_object_or_404(ClimateChangeResource, pk=pk)
+    if request.method == 'POST':
+        form = ClimateChangeResourceForm(request.POST, request.FILES, instance=resource)
+        if form.is_valid():
+            form.save()
+            return redirect('climate_change_list')
+    else:
+        form = ClimateChangeResourceForm(instance=resource)
+    return render(request, 'climate_change/form.html', {'form': form})
+
+# Admin - Delete resource
+@login_required
+@user_passes_test(is_admin)
+def climate_change_delete(request, pk):
+    resource = get_object_or_404(ClimateChangeResource, pk=pk)
+    if request.method == 'POST':
+        resource.delete()
+        return redirect('climate_change_list')
+    return render(request, 'climate_change/confirm_delete.html', {'resource': resource})

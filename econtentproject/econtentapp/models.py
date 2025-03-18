@@ -27,3 +27,20 @@ class BibleAndManResource(models.Model):
 
     def __str__(self):
         return self.title
+    
+class ClimateChangeResource(models.Model):
+    RESOURCE_TYPES = [
+        ('ebook', 'E-Book'),
+        ('video', 'Video'),
+    ]
+
+    title = models.CharField(max_length=255)
+    cover_image = models.ImageField(upload_to='climate_change/images/', blank=True, null=True)  # New field for image
+    description = models.TextField()
+    resource_type = models.CharField(max_length=10, choices=RESOURCE_TYPES)
+    file = models.FileField(upload_to='climate_change/resources/')  # For PDFs or Videos
+    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_uploaded = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
