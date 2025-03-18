@@ -10,3 +10,20 @@ class PasswordReset(models.Model):
 
     def __str__(self):
         return f"Password reset for {self.user.username} at {self.created_when}"
+    
+class BibleAndManResource(models.Model):
+    RESOURCE_TYPES = [
+        ('ebook', 'Ebook'),
+        ('video', 'Video'),
+    ]
+
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    resource_type = models.CharField(max_length=10, choices=RESOURCE_TYPES)
+    image = models.ImageField(upload_to='bible_and_man/images/', blank=True, null=True)
+    file = models.FileField(upload_to='bible_and_man/') # for PDFS OR Videos
+    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_uploaded = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title

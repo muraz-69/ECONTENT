@@ -133,3 +133,6 @@ EMAIL_PORT="465"
 EMAIL_USE_SSL=True
 EMAIL_HOST_USER="andrewmurabu@gmail.com"
 EMAIL_HOST_PASSWORD="hrik xvjg ermm twlw"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

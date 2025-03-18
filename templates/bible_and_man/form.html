@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center">{% if form.instance.pk %}Edit{% else %}Upload{% endif %} Resource</h2>
+    <form method="POST" enctype="multipart/form-data" class="p-4 border rounded">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Title:</label>
+            {{ form.title }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Description:</label>
+            {{ form.description }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Resource Type:</label>
+            {{ form.resource_type }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Upload Image (Optional):</label>
+            {{ form.image }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Upload File:</label>
+            {{ form.file }}
+        </div>
+        <button type="submit" class="btn btn-success">Save</button>
+    </form>
+</div>
+{% endblock %}

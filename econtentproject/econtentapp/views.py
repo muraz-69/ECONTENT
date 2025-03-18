@@ -1,13 +1,15 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.conf import settings
 from django.core.mail import EmailMessage
 from django.utils import timezone
 from django.urls import reverse
-from .models import *
+from .models import * 
+from .forms import BibleAndManResourceForm
+
 
 # Create your views here.
 @login_required
@@ -172,3 +174,58 @@ def ResetPassword(request, reset_id):
         return redirect('forgot-password')
 
     return render(request, 'reset_password.html')
+
+#check if user is admin
+def is_admin(user):
+    return user.is_superuser
+
+# list all resources
+def bible_and_man_list(request):
+    resources = BibleAndManResource.objects.all()
+    return render(request, 'home.html', {'resources': resources})
+
+#view details of a single resource
+def bible_and_man_detail(request, pk):
+    resource = get_object_or_404(BibleAndManResource, pk=pk)
+    return render(request, 'bible_and_man/detail.html', {'resource': resource})
+
+#ADMIN - add new resource
+@login_required
+@user_passes_test(is_admin)
+def bible_and_man_create(request):
+    if request.method == 'POST':
+        form = BibleAndManResourceForm(request.POST, request.FILES)
+        if form.is_valid():
+            resource = form.save(commit=False)
+            resource.uploaded_by = request.user
+            resource.save()
+            return redirect('bible_and_man_list')
+        else:
+            return render(request, 'bible_and_man/form.html', {'form': form})
+    else:
+        form = BibleAndManResourceForm()
+        return render(request, 'bible_and_man/form.html', {'form': form})
+    
+#admin- edit resource
+@login_required
+@user_passes_test(is_admin)
+def bible_and_man_update(request, pk):
+    resource = get_object_or_404(BibleAndManResource, pk=pk)
+    if request.method == 'POST':
+        form = BibleAndManResourceForm(request.POST, request.FILES, instance=resource)
+        if form.is_valid():
+            form.save()
+            return redirect('bible_and_man_list')
+    else:
+        form = BibleAndManResourceForm(instance=resource)
+        return render(request, 'bible_and_man/form.html', {'form': form})
+    
+#admin - Delete resources
+@login_required
+@user_passes_test(is_admin)
+def bible_and_man_delete(request, pk):
+    resource = get_object_or_404(BibleAndManResource, pk=pk)
+    if request.method == 'POST':
+        resource.delete()
+        return redirect('bible_and_man_list')
+    return render(request, 'bible_and_man/confirm_delete.html', {'resource': resource})
