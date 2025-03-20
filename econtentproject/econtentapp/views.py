@@ -10,6 +10,10 @@ from django.urls import reverse
 from .models import * 
 from .forms import BibleAndManResourceForm
 from .forms import ClimateChangeResourceForm
+from .forms import HealthWellnessResourceForm
+from .forms import TrendyFashionResourceForm
+from .forms import EBookForm
+from .forms import OnlineCourseForm
 
 
 # Create your views here.
@@ -215,7 +219,8 @@ def bible_and_man_update(request, pk):
     if request.method == 'POST':
         form = BibleAndManResourceForm(request.POST, request.FILES, instance=resource)
         if form.is_valid():
-            form.save()
+            resource.uploaded_by = request.user
+            resource.save()
             return redirect('bible_and_man_list')
     else:
         form = BibleAndManResourceForm(instance=resource)
@@ -268,7 +273,8 @@ def climate_change_update(request, pk):
     if request.method == 'POST':
         form = ClimateChangeResourceForm(request.POST, request.FILES, instance=resource)
         if form.is_valid():
-            form.save()
+            resource.uploaded_by = request.user
+            resource.save()
             return redirect('climate_change_list')
     else:
         form = ClimateChangeResourceForm(instance=resource)
@@ -283,3 +289,198 @@ def climate_change_delete(request, pk):
         resource.delete()
         return redirect('climate_change_list')
     return render(request, 'climate_change/confirm_delete.html', {'resource': resource})
+
+#health and wellness
+# List View
+def health_wellness_list(request):
+    resources = HealthWellnessResource.objects.all()
+    return render(request, 'health_wellness/list.html', {'resources': resources})
+
+# Detail View
+def health_wellness_detail(request, pk):
+    resource = get_object_or_404(HealthWellnessResource, pk=pk)
+    return render(request, "health_wellness/detail.html", {"resource": resource})
+# Create View
+def health_wellness_create(request):
+    if request.method == "POST":
+        form = HealthWellnessResourceForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('health_wellness_list')
+    else:
+        form = HealthWellnessResourceForm()
+    return render(request, 'health_wellness/form.html', {'form': form})
+
+# Update View
+def health_wellness_update(request, pk):
+    resource = get_object_or_404(HealthWellnessResource, pk=pk)
+    if request.method == "POST":
+        form = HealthWellnessResourceForm(request.POST, request.FILES, instance=resource)
+        if form.is_valid():
+            form.save()
+            return redirect('health_wellness_list')
+    else:
+        form = HealthWellnessResourceForm(instance=resource)
+    return render(request, 'health_wellness/form.html', {'form': form})
+
+# Delete View
+def health_wellness_delete(request, pk):
+    resource = get_object_or_404(HealthWellnessResource, pk=pk)
+    if request.method == "POST":
+        resource.delete()
+        return redirect('health_wellness_list')
+    return render(request, 'health_wellness/confirm_delete.html', {'resource': resource})
+
+def is_admin(user):
+    return user.is_superuser
+
+# List all resources
+def trendy_fashion_list(request):
+    resources = TrendyFashionResource.objects.all()
+    return render(request, 'trendy_fashion/list.html', {'resources': resources})
+
+# View details of a single resource
+def trendy_fashion_detail(request, pk):
+    resource = get_object_or_404(TrendyFashionResource, pk=pk)
+    return render(request, 'trendy_fashion/detail.html', {'resource': resource})
+
+# Admin - Add new resource
+@login_required
+@user_passes_test(is_admin)
+def trendy_fashion_create(request):
+    if request.method == 'POST':
+        form = TrendyFashionResourceForm(request.POST, request.FILES)
+        if form.is_valid():
+            resource = form.save(commit=False)
+            resource.uploaded_by = request.user
+            resource.save()
+            return redirect('trendy_fashion_list')
+    else:
+        form = TrendyFashionResourceForm()
+    return render(request, 'trendy_fashion/form.html', {'form': form})
+
+# Admin - Edit resource
+@login_required
+@user_passes_test(is_admin)
+def trendy_fashion_update(request, pk):
+    resource = get_object_or_404(TrendyFashionResource, pk=pk)
+    if request.method == 'POST':
+        form = TrendyFashionResourceForm(request.POST, request.FILES, instance=resource)
+        if form.is_valid():
+            form.save()
+            return redirect('trendy_fashion_list')
+    else:
+        form = TrendyFashionResourceForm(instance=resource)
+    return render(request, 'trendy_fashion/form.html', {'form': form})
+
+# Admin - Delete resource
+@login_required
+@user_passes_test(is_admin)
+def trendy_fashion_delete(request, pk):
+    resource = get_object_or_404(TrendyFashionResource, pk=pk)
+    if request.method == 'POST':
+        resource.delete()
+        return redirect('trendy_fashion_list')
+    return render(request, 'trendy_fashion/confirm_delete.html', {'resource': resource})
+
+def is_admin(user):
+    return user.is_superuser
+
+# List all e-books
+def ebook_list(request):
+    ebooks = EBook.objects.all()
+    return render(request, 'ebooks/list.html', {'ebooks': ebooks})
+
+# View details of a single e-book
+def ebook_detail(request, pk):
+    ebook = get_object_or_404(EBook, pk=pk)
+    return render(request, 'ebooks/detail.html', {'ebook': ebook})
+
+# Admin - Add new e-book
+@login_required
+@user_passes_test(is_admin)
+def ebook_create(request):
+    if request.method == 'POST':
+        form = EBookForm(request.POST, request.FILES)
+        if form.is_valid():
+            ebook = form.save(commit=False)
+            ebook.uploaded_by = request.user
+            ebook.save()
+            return redirect('ebook_list')
+    else:
+        form = EBookForm()
+    return render(request, 'ebooks/form.html', {'form': form})
+
+# Admin - Edit e-book
+@login_required
+@user_passes_test(is_admin)
+def ebook_update(request, pk):
+    ebook = get_object_or_404(EBook, pk=pk)
+    if request.method == 'POST':
+        form = EBookForm(request.POST, request.FILES, instance=ebook)
+        if form.is_valid():
+            form.save()
+            return redirect('ebook_list')
+    else:
+        form = EBookForm(instance=ebook)
+    return render(request, 'ebooks/form.html', {'form': form})
+
+# Admin - Delete e-book
+@login_required
+@user_passes_test(is_admin)
+def ebook_delete(request, pk):
+    ebook = get_object_or_404(EBook, pk=pk)
+    if request.method == 'POST':
+        ebook.delete()
+        return redirect('ebook_list')
+    return render(request, 'ebooks/confirm_delete.html', {'ebook': ebook})
+
+def is_admin(user):
+    return user.is_superuser
+
+# List all courses
+def online_course_list(request):
+    courses = OnlineCourse.objects.all()
+    return render(request, 'online_courses/list.html', {'courses': courses})
+
+# View a single course
+def online_course_detail(request, pk):
+    course = get_object_or_404(OnlineCourse, pk=pk)
+    return render(request, 'online_courses/detail.html', {'course': course})
+
+# Admin - Add new course
+@login_required
+@user_passes_test(is_admin)
+def online_course_create(request):
+    if request.method == 'POST':
+        form = OnlineCourseForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('online_course_list')
+    else:
+        form = OnlineCourseForm()
+    return render(request, 'online_courses/form.html', {'form': form})
+
+# Admin - Edit course
+@login_required
+@user_passes_test(is_admin)
+def online_course_update(request, pk):
+    course = get_object_or_404(OnlineCourse, pk=pk)
+    if request.method == 'POST':
+        form = OnlineCourseForm(request.POST, request.FILES, instance=course)
+        if form.is_valid():
+            form.save()
+            return redirect('online_course_list')
+    else:
+        form = OnlineCourseForm(instance=course)
+    return render(request, 'online_courses/form.html', {'form': form})
+
+# Admin - Delete course
+@login_required
+@user_passes_test(is_admin)
+def online_course_delete(request, pk):
+    course = get_object_or_404(OnlineCourse, pk=pk)
+    if request.method == 'POST':
+        course.delete()
+        return redirect('online_course_list')
+    return render(request, 'online_courses/confirm_delete.html', {'course': course})

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center">Health & Wellness Resources</h2>
+    <a href="{% url 'health_wellness_create' %}" class="btn btn-primary mb-3">Add New Resource</a>
+    <ul class="list-group">
+        {% for resource in resources %}
+            <li class="list-group-item">
+                <h5>{{ resource.title }}</h5>
+                {% if resource.image %}
+                    <img src="{{ resource.image.url }}" alt="Resource Image" style="width: 100px; height: auto;">
+                {% endif %}
+                <p>{{ resource.description|truncatewords:20 }}</p>
+                <a href="{% url 'health_wellness_detail' resource.pk %}" class="btn btn-info btn-sm">View</a>
+                <a href="{% url 'health_wellness_update' resource.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{% url 'health_wellness_delete' resource.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

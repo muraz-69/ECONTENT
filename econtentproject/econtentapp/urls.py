@@ -42,16 +42,16 @@ urlpatterns = [
     path('trendy_fashion/<int:pk>/delete/', views.trendy_fashion_delete, name='trendy_fashion_delete'),
 
     # E-Books CRUD
-    path('ebooks/', views.ebooks_list, name='ebooks_list'),
-    path('ebooks/<int:pk>/', views.ebooks_detail, name='ebooks_detail'),
-    path('ebooks/create/', views.ebooks_create, name='ebooks_create'),
-    path('ebooks/<int:pk>/edit/', views.ebooks_update, name='ebooks_update'),
-    path('ebooks/<int:pk>/delete/', views.ebooks_delete, name='ebooks_delete'),
+    path('ebooks/', views.ebook_list, name='ebooks_list'),
+    path('ebooks/<int:pk>/', views.ebook_detail, name='ebooks_detail'),
+    path('ebooks/create/', views.ebook_create, name='ebooks_create'),
+    path('ebooks/<int:pk>/edit/', views.ebook_update, name='ebooks_update'),
+    path('ebooks/<int:pk>/delete/', views.ebook_delete, name='ebooks_delete'),
 
     # Online Courses CRUD
-    path('online_courses/', views.online_courses_list, name='online_courses_list'),
-    path('online_courses/<int:pk>/', views.online_courses_detail, name='online_courses_detail'),
-    path('online_courses/create/', views.online_courses_create, name='online_courses_create'),
-    path('online_courses/<int:pk>/edit/', views.online_courses_update, name='online_courses_update'),
-    path('online_courses/<int:pk>/delete/', views.online_courses_delete, name='online_courses_delete'),
+    path('online_courses/', views.online_course_list, name='online_courses_list'),
+    path('online_courses/<int:pk>/', views.online_course_detail, name='online_courses_detail'),
+    path('online_courses/create/', views.online_course_create, name='online_courses_create'),
+    path('online_courses/<int:pk>/edit/', views.online_course_update, name='online_courses_update'),
+    path('online_courses/<int:pk>/delete/', views.online_course_delete, name='online_courses_delete'),
 ]
