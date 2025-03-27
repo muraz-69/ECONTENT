@@ -2,8 +2,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # Home Page (Main Landing Page)
-    path('', views.Home, name='home'),
+    # Home Page (Main Landing Page) 
+    path('', views.Home, name='index'),
+    
 
     # Authentication
     path('register/', views.RegisterView, name='register'),

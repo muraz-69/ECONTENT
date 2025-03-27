@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SITE_ID = 1
+
 
 # Application definition
 
@@ -41,9 +43,20 @@ INSTALLED_APPS = [
     'econtentapp',
     'crispy_forms',
     'crispy_bootstrap5', 
+
+    'django.contrib.sites',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 MIDDLEWARE = [
+    'allauth.account.middleware.AccountMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -130,13 +143,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'login'  # Redirect users to login page if not authenticated
 LOGIN_REDIRECT_URL = 'index'  # Redirect user here after login
+SOCIALACCOUNT_LOGIN_ON_GET = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST="smtp.gmail.com"
 EMAIL_PORT="465"
 EMAIL_USE_SSL=True
-EMAIL_HOST_USER="andrewmurabu@gmail.com"
-EMAIL_HOST_PASSWORD="hrik xvjg ermm twlw"
+EMAIL_HOST_USER="fidelityafriteam@gmail.com"
+EMAIL_HOST_PASSWORD="zvch plrv jhat ndys"
 DEFAULT_FROM_EMAIL = "EMAIL_HOST_USER"
 
 MEDIA_URL = '/media/'

@@ -3,6 +3,7 @@
 <html lang="en" dir="ltr">
   <head>
     {% load static %}
+    {% load socialaccount %}
     <meta charset="utf-8">
     <title>Login</title>
     <link rel="stylesheet" href="{% static 'style1.css' %}">
@@ -38,6 +39,9 @@
         </div>
 
         <input type="submit" value="Login">
+        <br><button type="button" class="login-with-google-btn"><a href="{% provider_login_url 'google' %}">
+          <b>Sign in with Google</b>
+      </button></a>
         <div class="signup_link">
           Not a member? <a href="{% url 'register' %}">Signup</a>
           <p>Forgot your Password? <a href="{% url 'forgot-password' %}">Reset Password</a></p> 
