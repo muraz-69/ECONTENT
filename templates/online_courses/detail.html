@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center">{{ course.title }}</h2>
+    {% if course.cover_image %}
+        <img src="{{ course.cover_image.url }}" class="img-fluid d-block mx-auto" alt="{{ course.title }}">
+    {% endif %}
+    <p>{{ course.description }}</p>
+
+    {% if course.course_type == 'ebook' %}
+        <a href="{{ course.file.url }}" class="btn btn-success" download>Download Course Material</a>
+    {% else %}
+        <video controls class="w-100">
+            <source src="{{ course.file.url }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    {% endif %}
+
+    {% if user.is_superuser %}
+        <a href="{% url 'online_course_update' course.pk %}" class="btn btn-warning">Edit</a>
+        <a href="{% url 'online_course_delete' course.pk %}" class="btn btn-danger">Delete</a>
+    {% endif %}
+</div>
+{% endblock %}

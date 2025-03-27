@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center">{{ resource.title }}</h2>
+    {% if resource.cover_image %}
+        <img src="{{ resource.cover_image.url }}" class="img-fluid d-block mx-auto" alt="{{ resource.title }}">
+    {% endif %}
+    <p>{{ resource.description }}</p>
+
+    {% if resource.resource_type == 'ebook' %}
+        <a href="{{ resource.file.url }}" class="btn btn-success" download>Download E-Book</a>
+    {% else %}
+        <video controls class="w-100">
+            <source src="{{ resource.file.url }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    {% endif %}
+
+    {% if user.is_superuser %}
+        <a href="{% url 'climate_change_update' resource.pk %}" class="btn btn-warning">Edit</a>
+        <a href="{% url 'climate_change_delete' resource.pk %}" class="btn btn-danger">Delete</a>
+    {% endif %}
+</div>
+{% endblock %}

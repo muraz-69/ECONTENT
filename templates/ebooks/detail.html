@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center">{{ ebook.title }}</h2>
+    {% if ebook.cover_image %}
+        <img src="{{ ebook.cover_image.url }}" class="img-fluid d-block mx-auto" alt="{{ ebook.title }}">
+    {% endif %}
+    <p>{{ ebook.description }}</p>
+
+    <a href="{{ ebook.file.url }}" class="btn btn-success" download>Download E-Book</a>
+
+    {% if user.is_superuser %}
+        <a href="{% url 'ebook_update' ebook.pk %}" class="btn btn-warning">Edit</a>
+        <a href="{% url 'ebook_delete' ebook.pk %}" class="btn btn-danger">Delete</a>
+    {% endif %}
+</div>
+{% endblock %}
