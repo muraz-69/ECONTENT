@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     # Home Page (Main Landing Page) 
-    path('', views.Home, name='index'),
+    path('', views.Home, name='home'),
     
 
     # Authentication

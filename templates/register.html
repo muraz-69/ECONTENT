@@ -57,9 +57,11 @@
 
         <!-- <div class="pass">Forgot Password?</div> -->
         <input type="submit" value="Register">
-        <br><button type="button" class="login-with-google-btn"><a href="{% provider_login_url 'google' %}">
+        <a href="{% provider_login_url 'google' %}">
+          <br><button onclick="window.location.href = '' " type="button" class="login-with-google-btn" >
           <b>Sign up with Google</b>
-      </button></a>
+        </button></a>
+      
         <div class="signup_link">
           Already have an account? <a href="{% url 'login' %}">Login</a>
         </div>

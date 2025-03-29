@@ -45,15 +45,17 @@ INSTALLED_APPS = [
     'crispy_bootstrap5', 
 
     'django.contrib.sites',
+    'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend', # standard django backend
+    'allauth.account.auth_backends.AuthenticationBackend', # all auth backend
 ]
+
 
 MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
@@ -142,7 +144,7 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'login'  # Redirect users to login page if not authenticated
-LOGIN_REDIRECT_URL = 'index'  # Redirect user here after login
+LOGIN_REDIRECT_URL = 'home'  # Redirect user here after login
 SOCIALACCOUNT_LOGIN_ON_GET = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -157,3 +159,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1:8000',  # Add your localhost
+]
