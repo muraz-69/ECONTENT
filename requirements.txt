@@ -2,3 +2,4 @@ Django==5.1.7
 crispy-forms
 crispy-bootstrap5
 django-allauth
+Pillow
