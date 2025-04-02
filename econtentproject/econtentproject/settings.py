@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-^*^en=)q$w)lcl80rk$8-y$!lnf+3nmx**g!xu_2m(^=civ@_7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['https://econtent.onrender.com']
+ALLOWED_HOSTS = ['*']
 
 SITE_ID = 1
 
