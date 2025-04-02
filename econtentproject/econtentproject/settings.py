@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-^*^en=)q$w)lcl80rk$8-y$!lnf+3nmx**g!xu_2m(^=civ@_7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://econtent.onrender.com']
 
 SITE_ID = 1
 
